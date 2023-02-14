@@ -1,6 +1,12 @@
-﻿namespace CheckSNILSLibrary
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CheckSNILSLibrary
 {
-    public class CheckPersonalClass
+    public class CheckSNILSClass
     {
         /// <summary>
         /// Расчет контрольной цифры СНИЛС
@@ -16,26 +22,27 @@
             int sum = 0;
             var text = textString.Split(' ', '-');
 
-            if (textString == null)
+            if (textString == string.Empty) 
             {
                 return false;
             }
-            if (textString.Length > 11 || textString.Length < 11)
+            if (textString.Length!=0)
             {
                 return false;
             }
-
-            for (int i = 9; i > 0; i--)
-            {
+            int i = 9;
+           
                 for (int z = 0; z < text.Length; z++)
                 {
-                    sum += Convert.ToInt32(Char.GetNumericValue(Convert.ToChar(text[i]))) * Convert.ToInt32(Char.GetNumericValue(Convert.ToChar(text[z])));
+                    sum += i* Convert.ToInt32(Char.GetNumericValue(Convert.ToChar(text[z])));
+                    i--;
                 }
-            }
-            if (sum != (Convert.ToInt32(text[9]) + Convert.ToInt32(text[10]))){
+            var text2= textString.Substring(9, 2);
+            if (sum != Convert.ToInt32(Char.GetNumericValue(Convert.ToChar(text2))))
+            {
                 return false;
             }
             return true;
         }
-    } 
+    }
 }
